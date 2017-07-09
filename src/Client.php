@@ -109,4 +109,8 @@ $prev = $client->getPrevParadaLinha(640001417,35072); //2304
 // 480012878
 echo "<br>PREV: <br>";
 // print_r($prev);
+echo "<pre>" ;
+echo "<h2>";
 echo json_encode($prev, JSON_PRETTY_PRINT);
+echo "</h2>";
+echo "</pre>";
