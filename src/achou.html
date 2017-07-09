@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var marker;
+      function initMap() {
+        var myLatLng = {lat: -23.4831785, lng: -46.6952624};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: myLatLng
+        });
+
+        marker = new google.maps.Marker({
+          position: myLatLng,
+          label: {
+            color: 'blue',
+            fontWeight: 'bold',
+            text: 'Oi Amô!'
+          },
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          title: 'Achoouu!'
+        });
+
+        marker.addListener('click', toggleBounce);
+
+        // verifica se o navegador tem suporte a geolocalização
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position){ // callback de sucesso
+                // ajusta a posição do marker para a localização do usuário
+                marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+                console.log('Ajustou');
+            }, 
+            function(error){ // callback de erro
+               alert('Erro ao obter localização!');
+               console.log('Erro ao obter localização.', error);
+            });
+        } else {
+            console.log('Navegador não suporta Geolocalização!');
+        }
+
+      }
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtGCXI6wR7hl6BiF1L4Hxu0i9LPoItBKQ&callback=initMap">
+    </script>
+  </body>
+</html>
